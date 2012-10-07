@@ -1,0 +1,31 @@
+
+{% extends "base/base.html" %}
+
+{% block title %}
+Books
+{% endblock %}
+
+{% block bigtitle %}
+S/W Team
+{% endblock %}
+
+{% block content %}
+<h2>
+Books
+</h2>
+
+<ul>
+
+{% for entry in books %}
+<li> {{ entry.title }} </li>
+{% endfor %}
+
+</ul>
+
+<hr/>
+
+
+{% endblock %}
+
+
+
