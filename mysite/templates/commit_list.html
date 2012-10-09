@@ -17,7 +17,7 @@ Commits
 <ul>
 
 {% for entry in commits %}
-<li> {{ entry.mode }} </li>
+<li> {{ entry.hex }},{{ entry.committer.name }},{{ entry.commit_time }},{{ entry.message }} </li>
 {% endfor %}
 
 </ul>

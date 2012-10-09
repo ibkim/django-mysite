@@ -4,7 +4,8 @@ from django.shortcuts import render_to_response
 from django.template import Context, loader
 import datetime
 
-from git import *
+from pygit2 import Repository
+from pygit2 import GIT_SORT_TIME
 
 from books.models import Book
 
@@ -26,9 +27,9 @@ def books(request, page=1):
     return HttpResponse(tpl.render(ctx))
 
 def commits(request, page=1):
-    repo = Repo("/reposi/project/softap/M9615R2020_local/apps_proc/kernel")
+    repo = Repository("/home/ibkim/pygit2/.git")
     #dev = repo.heads.develop
-    commit = repo.iter_commits('develop', max_count=15)
+    commit = repo.walk(repo.head.oid, GIT_SORT_TIME)
     tpl = loader.get_template('commit_list.html')
     ctx = Context( {'commits': commit,} )
     return HttpResponse(tpl.render(ctx))
