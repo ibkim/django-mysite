@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+
+>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+  <head>
+
+   <title>
+{% block title %}
+My test page
+{% endblock %}
+</title>
+
+    <meta name="author" content="filip"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="keywords" content="" />
+
+    <meta name="description" content="" />
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+<!--    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> -->
+
+  </head>
+
+  <body>
+
+    <div class="topNav">
+{% block topnav %}
+      <!--Beginning of top navigation--><a href="#">Home</a> | <a href="#">Contact</a> | Search: <input  type="text" size="25" /><button>&nbsp;</button>
+<!--End of top navigation-->
+{% endblock %}
+    </div>
+
+    <div class="titel">
+
+      <!--Change the main header in the following line-->
+
+      <h1>
+{% block bigtitle %}
+         [tomatoe]
+{% endblock %}
+      </h1>
+
+    </div>
+
+    <div class="leftNav">
+
+      <!--Beginning of Left Navigation-->
+      <ul>
+{% block leftnav %}
+        <li>
+
+          <a href="#">Home</a>
+
+        </li>
+
+        <li>
+
+          <a href="#">Photos</a>
+
+        </li>
+
+        <li>
+
+          <a href="#">Downloads</a>
+
+        </li>
+
+        <li>
+
+          <a href="#">Links</a>
+
+        </li>
+
+        <li>
+
+          <a href="#">Contact</a>
+
+        </li>
+{% endblock %}
+
+      </ul>
+
+      <!--End of Left Navigation-->
+
+    </div>
+
+    <div class="main">
+
+      <!--Beginning of Content-->
+{% block content %}
+      <h2>
+
+         What can you do with this template?
+
+      </h2>
+
+       This template is distributed under the <a href="http://creativecommons.org/licenses/by/3.0" target="_blank">Creative Commons Attribution 3.0 license</a>. Modify it as you like, but please leave credit intact (you don't have to leave it in the footer - place it wherever it fits).
+
+      <br />
+
+       If you're having a hard time with this template just <a href="http://www.yomena.de" title="www.yomena.de" target="_blank">contact me</a>. I'll modify it or even create a unique design for you.
+
+      <br />
+
+       Have fun!!!
+
+      <h2>
+
+         Resolutions &#038; Browsers
+
+      </h2>
+
+       The design has been tested with several resolutions in different browsers. I'm sure most resolutions will do just fine but these are the ones that I have tested:
+
+      <ul>
+
+        <li>
+
+           800x600
+
+        </li>
+
+        <li>
+
+           1024x768
+
+        </li>
+
+      </ul>
+
+      <br />
+
+       I tested it on the following browsers:
+
+      <ul>
+
+        <li>
+
+           Firefox 2
+
+        </li>
+
+        <li>
+
+           Internet Explorer 6
+
+        </li>
+
+        <li>
+
+           Netscape Navigator 7
+
+        </li>
+
+        <li>
+
+           Opera 9
+
+        </li>
+
+        <li>
+
+           Konqueror 3.5
+
+        </li>
+
+        <li>
+
+           Safari
+
+        </li>
+
+      </ul>
+
+      <hr />
+
+      <h2>
+
+         Lorem ipsum
+
+      </h2>
+
+       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut a sapien. Aliquam aliquet purus molestie dolor. Integer quis eros ut erat posuere dictum. Curabitur dignissim. Integer orci. Fusce vulputate lacus at ipsum. Quisque in libero nec mi laoreet volutpat. Aliquam eros pede, scelerisque quis, tristique cursus, placerat convallis, velit. Nam condimentum. Nulla ut mauris. Curabitur adipiscing, mauris non dictum aliquam, arcu risus dapibus diam, nec sollicitudin quam erat quis ligula.
+
+      <blockquote>
+
+         Aliquam aliquet purus molestie dolor. Integer quis eros ut erat posuere dictum.
+
+      </blockquote>
+
+       Aenean massa nulla, volutpat eu, accumsan et, fringilla eget, odio. Nulla placerat porta justo. Nulla vitae turpis. Praesent lacus.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam ultricies lacus eu dui. Duis viverra risus et eros. Aenean odio dolor, tristique quis, commodo id, posuere sit amet, dui. Pellentesque velit. Aliquam erat volutpat. Duis sagittis nibh sed justo. Sed ultrices nisl sed pede. Sed tempor lorem in leo. Integer gravida tincidunt nunc. Vivamus ut quam vel ligula tristique condimentum. Proin facilisis. Aliquam sagittis lacinia mi. Donec sagittis luctus dui. Maecenas quam ante, vestibulum auctor, blandit in, iaculis in, velit. Aliquam at ligula. Nam a tellus. Aliquam eu nulla at turpis vulputate hendrerit. Proin at diam. Curabitur euismod.Nam iaculis blandit purus. Mauris odio nibh, hendrerit id, cursus vel, sagittis a, dolor. Nullam turpis lacus, ultrices vel, sagittis vitae, dapibus vel, elit. Suspendisse auctor, sapien et suscipit tempor, turpis enim consequat sem, eu dictum nunc lorem at massa. Pellentesque scelerisque purus. Etiam sed enim. Maecenas sed tortor id turpis consequat consequat. Curabitur fringilla. Sed risus wisi, dictum a, sagittis nec, luctus ac, neque. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed nibh neque, aliquam ut, sagittis id, gravida et, est. Aenean consectetuer pretium enim. Aenean tellus quam, condimentum a, adipiscing et, lacinia vel, ante. Praesent faucibus dignissim enim. Aliquam tincidunt. Mauris leo ante, condimentum eget, vestibulum sit amet, fringilla eget, diam. Nam ultricies ullamcorper nibh. Etiam neque. Ut posuere laoreet pede. Quisque lobortis euismod metus. Nam ante. Nulla fermentum, risus non pulvinar porttitor, enim pede egestas nibh, sit amet posuere metus tortor id enim. Donec at sem. Vestibulum in lectus ut diam lacinia lacinia. Maecenas sit amet nulla. Suspendisse vel dolor. Nunc hendrerit elit vitae quam. In nonummy velit nec lorem. Etiam rhoncus felis a turpis. Aliquam vel nulla. Ut nonummy, nisl non sodales iaculis, mi tellus viverra diam, eget euismod dui turpis at mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vestibulum nec quam ac lectus sagittis tincidunt. Suspendisse nibh. Nunc vulputate leo id urna. Donec dictum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse dictum, magna consectetuer hendrerit volutpat, sapien felis faucibus justo, ac dictum lacus pede in metus. Nam commodo. Sed consequat, leo pretium sagittis congue, ante nunc laoreet nisl, ac aliquam risus tellus commodo elit. Cras at elit. Pellentesque suscipit erat vitae mauris. <!--End of Content-->
+{% endblock %}
+
+    </div>
+
+    <div class="footer">
+{% block footer %}
+      <!--Beginning of footer - please leave the credits intact (or place them wherever you like... thanx--> Design: <a href="http:www.yomena.de">www.yomena.de</a> | Photo: Mylene Bressan for <a href="http://16542.openphoto.net">openphoto.net</a> | CC:<a href="http://creativecommons.org/licenses/by/3.0">Attribution</a>
+{% endblock %}
+
+
+<!--End of footer-->
+
+    </div>
+
+    <br />
+
+  </body>
+
+</html>

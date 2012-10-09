@@ -23,5 +23,6 @@ urlpatterns = patterns('',
     url(r'^time/(\d{1,2})/$', time),
     url(r'^books/$', books),
     url(r'^books/(?P<page>\d+)/$', books),
-                       
+    url(r'^git/$', commits),
+
 )

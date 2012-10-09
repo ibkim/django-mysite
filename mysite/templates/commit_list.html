@@ -1,0 +1,31 @@
+
+{% extends "base/base.html" %}
+
+{% block title %}
+commits
+{% endblock %}
+
+{% block bigtitle %}
+git
+{% endblock %}
+
+{% block content %}
+<h2>
+Commits
+</h2>
+
+<ul>
+
+{% for entry in commits %}
+<li> {{ entry.mode }} </li>
+{% endfor %}
+
+</ul>
+
+<hr/>
+
+
+{% endblock %}
+
+
+
