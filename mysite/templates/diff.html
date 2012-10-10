@@ -1,0 +1,38 @@
+
+{% extends "base/base.html" %}
+
+{% block title %}
+Diff
+{% endblock %}
+
+{% block bigtitle %}
+git
+{% endblock %}
+
+{% block content %}
+<h2>
+Diff
+</h2>
+
+diff.patch
+
+<p>
+{% autoescape off %}
+{{ diff.patch }}
+{% endautoescape %}
+</p>
+
+<hr/>
+
+diff.changes
+<blockquote>
+<p>
+{{ diff.changes }}
+</p>
+</blockquote>
+<hr/>
+
+{% endblock %}
+
+
+

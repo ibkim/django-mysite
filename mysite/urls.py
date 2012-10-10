@@ -24,5 +24,6 @@ urlpatterns = patterns('',
     url(r'^books/$', books),
     url(r'^books/(?P<page>\d+)/$', books),
     url(r'^git/$', commits),
+    url(r'^diff/$', diff),
 
 )

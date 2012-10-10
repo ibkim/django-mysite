@@ -7,6 +7,25 @@ body
         text-align: left;
 }
 
+table.diff
+{
+    border:0px; border-collapse:collapse; width: 100%; font-size:1.1em; font-family: Lucida Console, monospace
+}
+
+td.line { color:#8080a0 }
+th { background: black; color: white }
+/* tr.diffunmodified td { background: #D0D0E0 } */
+tr.diffunmodified td { background: white }
+tr.diffhunk td { background: #A0A0A0 }
+tr.diffadded td { background: #CCFFCC }
+tr.diffdeleted td { background: #FFCCCC }
+tr.diffchanged td { background: #FFFFA0 }
+span.diffchanged2 { background: #E0C880 }
+span.diffponct { color: #B08080 }
+tr.diffmisc td {}
+tr.diffseparator td {}
+
+
 /* Links */
 
 a:link { color: #273A4D; text-decoration: none;}
@@ -343,5 +362,4 @@ ul#sidenotes li a:active
 	color: #003355;
 	background-color:transparent;
 }
-
 

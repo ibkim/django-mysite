@@ -11,19 +11,34 @@ git
 
 {% block content %}
 <h2>
-Commits
+References
 </h2>
 
 <ul>
-
-{% for entry in commits %}
-<li> {{ entry.hex }},{{ entry.committer.name }},{{ entry.commit_time }},{{ entry.message }} </li>
+{% for entry in refs %}
+<li> {{ entry }} </li>
 {% endfor %}
-
 </ul>
 
 <hr/>
 
+
+<h2>
+Commits
+</h2>
+
+<ul>
+{% for entry in commits %}
+<li> {{ entry.hexsha }} </li>
+ <ul>
+    <li> {{ entry.author.name }} </li>
+    <li> {{ entry.time }} </li>
+    <li> {{ entry.message }} </li>
+ </ul>
+{% endfor %}
+</ul>
+
+<hr/>
 
 {% endblock %}
 
