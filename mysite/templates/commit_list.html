@@ -10,13 +10,16 @@ git
 {% endblock %}
 
 {% block content %}
+{% autoescape off %}
 <h2>
 References
 </h2>
 
 <ul>
-{% for entry in refs %}
-<li> {{ entry }} </li>
+{% for entry in refs|slice:":2" %}
+    <li> {{ entry.str }} </li>
+{% empty %}
+    <li> No References </li>
 {% endfor %}
 </ul>
 
@@ -33,13 +36,18 @@ Commits
  <ul>
     <li> {{ entry.author.name }} </li>
     <li> {{ entry.time }} </li>
-    <li> {{ entry.message }} </li>
+    <li> parent numer {{ entry.parent1 }}} </li>
+    <li> parent numer {{ entry.parent2 }}} </li>
  </ul>
+
+<blockquote>
+{{ entry.message|linebreaksbr }}
+</blockquote>
 {% endfor %}
 </ul>
 
 <hr/>
-
+{% endautoescape %}
 {% endblock %}
 
 

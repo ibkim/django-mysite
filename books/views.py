@@ -5,7 +5,7 @@ from django.template import Context, loader
 import datetime
 
 from pygit2 import Repository
-from pygit2 import GIT_SORT_TIME
+from pygit2 import GIT_SORT_TIME, GIT_OBJ_TAG
 import copy
 
 from diff2html import parse_from_memory
@@ -33,38 +33,59 @@ class Commit:
     pass
 
 def commits(request, page=1):
-    commit = []
+    entries = []
     item = Commit()
-    repo = Repository("/var/www/mysite/.git")
-    #repo = Repository("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel/.git")
+    item_cnt = 0;
+    loop_cnt = 0;
+    skip_cnt = 0;
+    entry_per_page = 30
+
+    page = int(page)
+
+    if page <= 1:
+        skip_cnt = 0
+    elif page > 1:
+        skip_cnt = (page-1) * entry_per_page
+    else:
+        skip_cnt = 0
+
+    #repo = Repository("/var/www/mysite/.git")
+    repo = Repository("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel/.git")
     all_refs = repo.listall_references()
-    master_ref = repo.lookup_reference("refs/heads/master")
+    #all_refs = filter(lambda x: x['object'].type != GIT_OBJ_TAG, map(lambda x: {'str': x, 'object':repo.lookup_reference(x)}, all_refs))
+    master_ref = repo.lookup_reference("refs/heads/develop")
+    print page, skip_cnt, range(0, skip_cnt)
+
     commit_head = repo[master_ref.oid]
 
-    item.hexsha = commit_head.hex
-    item.author = commit_head.author
-    item.time   = commit_head.author.time
-    item.message = commit_head.message
+#    if skip_cnt is 0:
+#        pass
+#    else:
+#        for i in range(0,skip_cnt):
+#            commit_head = commit_head.parents[0]
 
-    commit.append(copy.copy(item))
+    for commit in repo.walk(commit_head.oid, GIT_SORT_TIME):
+        if loop_cnt >= entry_per_page:
+            break
+        item.hexsha = commit.hex
+        item.author = commit.author
+        item.time   = commit.author.time
+        item.message = commit.message
+        item.parent1 = commit.parents[0].hex
+        if len(commit.parents) > 1:
+            item.parent2 = commit.parents[1].hex
 
-    commit_head = commit_head.parents[0]
-
-    item.hexsha = commit_head.hex
-    item.author = commit_head.author
-    item.time   = commit_head.author.time
-    item.message = commit_head.message
-
-    commit.append(copy.copy(item))
+        entries.append(copy.copy(item))
+        loop_cnt += 1
 
     tpl = loader.get_template('commit_list.html')
-    ctx = Context( {'refs': all_refs, 'commits': commit} )
+    ctx = Context( {'refs': all_refs, 'commits': entries} )
     return HttpResponse(tpl.render(ctx))
 
 class Diff:
     pass
 
-def diff(request, page=1):
+def diff(request, sha=0):
     repo = Repository("/var/www/mysite/.git")
     dev = repo.head
     t0 = dev.tree

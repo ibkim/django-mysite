@@ -23,7 +23,8 @@ urlpatterns = patterns('',
     url(r'^time/(\d{1,2})/$', time),
     url(r'^books/$', books),
     url(r'^books/(?P<page>\d+)/$', books),
-    url(r'^git/$', commits),
-    url(r'^diff/$', diff),
+    url(r'^commit/$', commits),
+    url(r'^commit/(?P<page>\d+)/$', commits),
+    url(r'^diff/(?P<sha>.*)$', diff),
 
 )
