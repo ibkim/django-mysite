@@ -41,7 +41,7 @@ git
 <h2>
 References
 </h2>
-
+<!--
 <a class="link" href="#" rel="div1">Link 1</a>
 <a class="link" href="#" rel="div2">Link 2</a>
 <a class="link" href="#" rel="div3">Link 3</a>
@@ -49,7 +49,7 @@ References
 <div class="hcontent" id="div1">Content 1</div>
 <div class="hcontent" id="div2">Content 2</div>
 <div class="hcontent" id="div3">Content 3</div>
-
+-->
 <ul>
 {% for entry in refs %}
     <li> {{ entry.name }} </li>
@@ -71,16 +71,19 @@ Prev
 </div>
 <ul>
 {% for entry in commits %}
-<li> <a href="/diff/{{entry.hexsha}}"> {{ entry.hexsha }} </a> </li>
+<li> <a href="/diff/{{entry.hexsha}}"> {{ entry.hexsha|truncatechars:10 }} </a> </li>
  <ul>
     <li> {{ entry.author.name }} ({{ entry.author.email }} </li>
-    <li> {{ entry.committed_date }} </li>
+    <li> {{ entry.committed_date|date:"Y/m/d D H:i:s" }} </li>
     <li> {{ entry.summary }} </li>
  </ul>
 
+<a class="link" href="#" rel="{{entry.hexsha}}">...</a>
+<div class="hcontent" id="{{entry.hexsha}}">
 <blockquote>
 {{ entry.message|linebreaksbr }}
 </blockquote>
+</div>
 {% endfor %}
 </ul>
 <div align=center>

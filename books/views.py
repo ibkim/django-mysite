@@ -49,8 +49,10 @@ def commits(request, page=1):
     else:
         skip_cnt = 0
 
-    repo = Repo("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel", odbt=GitCmdObjectDB)
-    commits = repo.iter_commits('develop', max_count = entry_per_page, skip = skip_cnt)
+    repo = Repo("/home/ibkim/project/python/mysite")
+    commits = repo.iter_commits('master', max_count = entry_per_page, skip = skip_cnt)
+
+    commits = map(lambda x: {'hexsha': x.hexsha, 'author': x.author, 'summary': x.summary, 'committed_date': datetime.datetime.fromtimestamp(x.committed_date), 'message': x.message}, commits)
 
     prev_page_num = page - 1
     next_page_num = page + 1
@@ -61,7 +63,7 @@ def commits(request, page=1):
     return HttpResponse(tpl.render(ctx))
 
 def diff(request, sha=''):
-    repo = Repo("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel", odbt=GitCmdObjectDB)
+    repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
 
     try:
         commit = repo.commit(sha)
