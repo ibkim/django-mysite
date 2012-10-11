@@ -1,11 +1,11 @@
+
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Context, loader
 import datetime
 
-from pygit2 import Repository
-from pygit2 import GIT_SORT_TIME, GIT_OBJ_TAG
+from git import *
 import copy
 
 from diff2html import parse_from_memory
@@ -38,7 +38,7 @@ def commits(request, page=1):
     item_cnt = 0;
     loop_cnt = 0;
     skip_cnt = 0;
-    entry_per_page = 30
+    entry_per_page = 10
 
     page = int(page)
 
@@ -49,52 +49,46 @@ def commits(request, page=1):
     else:
         skip_cnt = 0
 
-    #repo = Repository("/var/www/mysite/.git")
-    repo = Repository("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel/.git")
-    all_refs = repo.listall_references()
-    #all_refs = filter(lambda x: x['object'].type != GIT_OBJ_TAG, map(lambda x: {'str': x, 'object':repo.lookup_reference(x)}, all_refs))
-    master_ref = repo.lookup_reference("refs/heads/develop")
-    print page, skip_cnt, range(0, skip_cnt)
+    repo = Repo("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel", odbt=GitCmdObjectDB)
+    commits = repo.iter_commits('develop', max_count = entry_per_page, skip = skip_cnt)
 
-    commit_head = repo[master_ref.oid]
-
-#    if skip_cnt is 0:
-#        pass
-#    else:
-#        for i in range(0,skip_cnt):
-#            commit_head = commit_head.parents[0]
-
-    for commit in repo.walk(commit_head.oid, GIT_SORT_TIME):
-        if loop_cnt >= entry_per_page:
-            break
-        item.hexsha = commit.hex
-        item.author = commit.author
-        item.time   = commit.author.time
-        item.message = commit.message
-        item.parent1 = commit.parents[0].hex
-        if len(commit.parents) > 1:
-            item.parent2 = commit.parents[1].hex
-
-        entries.append(copy.copy(item))
-        loop_cnt += 1
-
+    prev_page_num = page - 1
+    next_page_num = page + 1
+    if prev_page_num <= 0:
+        prev_page_num = 1
     tpl = loader.get_template('commit_list.html')
-    ctx = Context( {'refs': all_refs, 'commits': entries} )
+    ctx = Context( {'refs': repo.heads, 'commits': commits, 'prev_page': prev_page_num, 'next_page': next_page_num,} )
     return HttpResponse(tpl.render(ctx))
 
-class Diff:
-    pass
+def diff(request, sha=''):
+    repo = Repo("/home/ibkim/nsserver/M9615R2030/apps_proc/kernel", odbt=GitCmdObjectDB)
 
-def diff(request, sha=0):
-    repo = Repository("/var/www/mysite/.git")
-    dev = repo.head
-    t0 = dev.tree
-    t1 = dev.parents[0].tree
-    diff = t1.diff(t0)
+    try:
+        commit = repo.commit(sha)
+    except BadObject:
+        tpl = loader.get_template('error.html')
+        ctx = Context( {'error': 'Bad ObjectError',} )
+        return HttpResponse(tpl.render(ctx))
 
-    # formatting
-    Diff.patch = parse_from_memory(diff.patch, True, True)
+    diff = commit.diff( commit.hexsha + '~1', None, True)
+    AddDiff = []
+    DelDiff = []
+    ReDiff = []
+    ModDiff = []
+    # HTML formatting
+    for entry in diff.iter_change_type('M'):
+        if entry.deleted_file or entry.new_file or entry.renamed:
+            continue
+        htmldiff = parse_from_memory(entry.diff, True, True)
+        ModDiff.append({'diff': htmldiff,})
+
+    for entry in diff.iter_change_type('A'):
+        AddDiff.append(entry)
+    for entry in diff.iter_change_type('D'):
+        DelDiff.append(entry)
+    for entry in diff.iter_change_type('R'):
+        ReDiff.append(entry)
 
     tpl = loader.get_template('diff.html')
-    ctx = Context( {'diff': Diff,} )
+    ctx = Context( {'add': AddDiff, 'del': DelDiff, 'rename': ReDiff, 'modify': ModDiff} )
     return HttpResponse(tpl.render(ctx))

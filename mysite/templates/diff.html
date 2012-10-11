@@ -13,25 +13,58 @@ git
 <h2>
 Diff
 </h2>
-
-diff.patch
+{% autoescape off %}
 
 <p>
-{% autoescape off %}
-{{ diff.patch }}
-{% endautoescape %}
+Added Files
+<ul>
+{% for entry in add %}
+<li> {{ entry.diff }} </li>
+{% empty %}
+Empty
+{% endfor %}
+</ul>
 </p>
+
+<p>
+Deleted Files
+<ul>
+{% for entry in del %}
+<li> {{ entry.diff }} </li>
+{% empty %}
+Empty
+{% endfor %}
+</ul>
+</p>
+
+<p>
+Renamed Files
+<ul>
+{% for entry in rename %}
+<li> {{ entry.diff }} </li>
+{% empty %}
+Empty
+{% endfor %}
+</ul>
+</p>
+
 
 <hr/>
 
-diff.changes
+<h2> Modified Files </h2>
+{% for entry in modify %}
+
 <blockquote>
 <p>
-{{ diff.changes }}
+{{ entry.diff }}
 </p>
 </blockquote>
 <hr/>
+{% empty %}
+Empty
+{% endfor %}
 
+{% endautoescape %}
 {% endblock %}
 
 

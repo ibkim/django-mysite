@@ -25,6 +25,12 @@ span.diffponct { color: #B08080 }
 tr.diffmisc td {}
 tr.diffseparator td {}
 
+.active {
+    font-weight: bold;
+}
+.hcontent {
+    display: none;
+}
 
 /* Links */
 

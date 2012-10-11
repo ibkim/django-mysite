@@ -1,6 +1,33 @@
 
 {% extends "base/base.html" %}
 
+{% autoescape off %}
+{% block script %}
+<script type="text/javascript" src="/script/jquery-1.5.2.js"></script>
+
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+// Catch all clicks on a link with the class 'link'
+$('.link').click(function(e) {
+    // Stop the link being followed:
+    e.preventDefault();
+    // Get the div to be shown:
+    var content = $(this).attr('rel');
+    // Remove any active classes:
+    $('.active').removeClass('active');
+    // Add the 'active' class to this link:
+    $(this).addClass('active');
+    // Hide all the content:
+    //$('.hcontent').hide();
+    // Show the requested content:
+    $('#' + content, "").toggle();
+});
+});//]]>  
+
+</script>
+{% endblock %}
+{% endautoescape %}
+
 {% block title %}
 commits
 {% endblock %}
@@ -15,9 +42,17 @@ git
 References
 </h2>
 
+<a class="link" href="#" rel="div1">Link 1</a>
+<a class="link" href="#" rel="div2">Link 2</a>
+<a class="link" href="#" rel="div3">Link 3</a>
+
+<div class="hcontent" id="div1">Content 1</div>
+<div class="hcontent" id="div2">Content 2</div>
+<div class="hcontent" id="div3">Content 3</div>
+
 <ul>
-{% for entry in refs|slice:":2" %}
-    <li> {{ entry.str }} </li>
+{% for entry in refs %}
+    <li> {{ entry.name }} </li>
 {% empty %}
     <li> No References </li>
 {% endfor %}
@@ -29,15 +64,18 @@ References
 <h2>
 Commits
 </h2>
-
+<div align=center>
+<a href="/commit/{{ prev_page }}/">
+Prev
+</a> -- | -- <a href="/commit/{{ next_page }}/">Next</a>
+</div>
 <ul>
 {% for entry in commits %}
-<li> {{ entry.hexsha }} </li>
+<li> <a href="/diff/{{entry.hexsha}}"> {{ entry.hexsha }} </a> </li>
  <ul>
-    <li> {{ entry.author.name }} </li>
-    <li> {{ entry.time }} </li>
-    <li> parent numer {{ entry.parent1 }}} </li>
-    <li> parent numer {{ entry.parent2 }}} </li>
+    <li> {{ entry.author.name }} ({{ entry.author.email }} </li>
+    <li> {{ entry.committed_date }} </li>
+    <li> {{ entry.summary }} </li>
  </ul>
 
 <blockquote>
@@ -45,7 +83,9 @@ Commits
 </blockquote>
 {% endfor %}
 </ul>
-
+<div align=center>
+<a href="/commit/{{ prev_page }}/">Prev</a> -- | -- <a href="/commit/{{ next_page }}/">Next</a>
+</div>
 <hr/>
 {% endautoescape %}
 {% endblock %}

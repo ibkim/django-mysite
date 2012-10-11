@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root':SITE_ROOT+'/templates/css'}),
+    url(r'^script/(?P<path>.*)$', 'django.views.static.serve', {'document_root':SITE_ROOT+'/templates/scripts'}),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^time/(\d{1,2})/$', time),
     url(r'^books/$', books),
