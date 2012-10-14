@@ -1,5 +1,5 @@
 
-{% extends "base/base.html" %}
+{% extends "themes/wp-bliss/base.html" %}
 
 {% autoescape off %}
 {% block script %}
@@ -71,18 +71,17 @@ Prev
 </div>
 <ul>
 {% for entry in commits %}
-<li> <a href="/diff/{{entry.hexsha}}"> {{ entry.hexsha|truncatechars:10 }} </a> </li>
+<li> <a href="/diff/{{entry.hexsha}}">{{entry.summary}} ({{ entry.hexsha|truncatechars:10 }}) </a> </li>
  <ul>
     <li> {{ entry.author.name }} ({{ entry.author.email }} </li>
     <li> {{ entry.committed_date|date:"Y/m/d D H:i:s" }} </li>
-    <li> {{ entry.summary }} </li>
  </ul>
 
 <a class="link" href="#" rel="{{entry.hexsha}}">...</a>
 <div class="hcontent" id="{{entry.hexsha}}">
-<blockquote>
+<div class="message">
 {{ entry.message|linebreaksbr }}
-</blockquote>
+</div>
 </div>
 {% endfor %}
 </ul>
