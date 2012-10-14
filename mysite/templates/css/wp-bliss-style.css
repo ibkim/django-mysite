@@ -1,0 +1,355 @@
+@charset "utf-8";
+/*-------------------------------------------------------------*/
+/* CSS Document                                                */
+/* Template Name: WP Bliss                                     */
+/* Designed By: Santhosh. S                                    */
+/* Homepage: www.themebin.com                                  */
+/*-------------------------------------------------------------*/
+
+
+/* HTML Elements */
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size:small;
+	font-size:10px;
+	text-align: center;
+	color:#555555;
+	background: #fff;
+	font-size:12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;	
+}
+
+table.diff
+{
+    border:0px; border-collapse:collapse; width: 100%; font-size:1.1em; font-family: Lucida Console, monospace
+}
+
+td.line { color:#8080a0 }
+th { background: black; color: white }
+/* tr.diffunmodified td { background: #D0D0E0 } */
+tr.diffunmodified td { background: white }
+tr.diffhunk td { background: #A0A0A0 }
+tr.diffadded td { background: #CCFFCC }
+tr.diffdeleted td { background: #FFCCCC }
+tr.diffchanged td { background: #FFFFA0 }
+span.diffchanged2 { background: #E0C880 }
+span.diffponct { color: #B08080 }
+tr.diffmisc td {}
+tr.diffseparator td {}
+
+.active {
+    font-weight: bold;
+}
+.hcontent {
+    display: none;
+}
+
+.hcontent {
+    margin : 10px;
+    padding : 0 5px;
+    border : 1px solid #C6D9E9;
+    background-color : #E4F2FD;
+}
+a:link, a:visited {
+	text-decoration: none;
+	color:#2583AD;
+	border-bottom:none;
+	font-weight:bold;
+}
+
+a:hover, a:active 
+{
+	text-decoration:none;
+	color: #D54E21;
+}
+ol, ul 
+{
+	margin:1em;
+	padding:0 0 0 2em;
+}
+
+/* Headers */
+h1,h2,h3,h4,h5,h6 
+{
+	font-family: Georgia, "Lucida Grande", "Lucida Sans Unicode", lucida, Verdana, sans-serif;
+	color:#2E2017;
+}
+h2 {
+	font-size : 110%;
+	color : #37371e;
+}
+h3 {
+	font-size:1.4em;
+	margin:0;
+	margin-bottom:5px;
+	padding:10px 0 0 0;
+	font-weight:normal;
+}
+h4 {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 1.1em;
+	color: #999;
+}
+
+/* Header */
+
+#header {
+	height: 88px;
+	background: #464646;
+	text-align:left;
+}
+#logo-text {
+	position : absolute;
+	width : 350px;
+	height : 50px;
+	padding : 0;
+	margin-top : 10px;
+	margin-left : 20px;
+	font-size: 22px;
+	text-align : left;
+	color : #ffffff;
+}
+
+#logo-slogan {
+	position : absolute;
+	width : 250px;
+	height : 25px;
+	padding : 0;
+	margin-top : 45px;
+	margin-left : 20px;
+	font : bolder 1.1em Geneva, Arial, Helvetica, sans-serif;
+	text-align : left;
+	color : #999999;
+}
+#header-low {
+	background: #E4F2FD;
+	height: 23px;
+	text-align:center;
+	position:relative;
+	border-bottom: solid 1px #C6D9E9;
+}
+
+/* Images */
+
+img {
+	border: none;
+}
+
+img.center, img[align="center"] {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alignleft {
+	float: left;
+}
+img.alignleft, img[align="left"] {
+	float:left;
+	margin: 2px 10px 5px 0px;
+}
+
+/* Formatting */
+
+code {
+	margin: 4px 0;
+	padding: 8px;
+	text-align: left;
+	display: block;
+	overflow: auto;  
+	font: 500 1em/1.5em 'Lucida Console', 'courier new', monospace ;
+}
+blockquote{
+	background: #fff;
+	margin: 0.5em;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	padding:0.5em;
+	border-left:#C6D9E9 2px solid;
+}
+
+p {
+	margin: 0 0 1em;
+	padding: 0;
+	line-height: 1.8em;	
+}
+
+/* Wrap */
+
+#wrap {
+	width: 980px;
+	margin: 0px auto;
+	padding: 0;
+	text-align: left;
+	line-height: 18px;	
+	background:#fff;
+	
+}
+
+/* Navigation Bar */
+
+#nav {
+	height : 25px;
+	padding-left: 25px;
+}
+
+#nav-bar {
+	position : relative;
+	width : auto;
+	height : 24px;
+	margin : 0;
+	padding : 0 0 0 0;
+	font : bold 12px/25px Verdana, Arial, Tahoma, Sans-serif;
+}
+
+#nav-bar ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+
+#nav-bar ul li {
+	display : inline;
+}
+
+#nav-bar ul li a {
+	display : block;
+	float : left;
+	padding : 0 10px;
+	color : #666666;
+	text-decoration : none;
+}
+
+#nav-bar ul li a:hover {
+	color : #000000;
+}
+
+#nav-bar ul li#selected a {
+	color : #000000;
+}
+
+/* Content */
+#content {
+	background : #ffffff;
+	width : 700px;
+	margin-top : 30px;
+	margin-left : 10px;
+	position : relative;
+	text-align : left;
+	padding-left : 10px;
+	padding-right : 10px;
+	border-bottom : 8px solid #ffffff;
+}
+#content h1 {
+	margin-top : 10px;
+	font : bold 125% Verdana, 'Trebuchet MS', Sans-serif;
+	color : #2583AD;
+	padding : 5px 0 5px 0px;
+	text-align : justify;
+	background : url(post-bullet.png) no-repeat 0 56%;
+}
+
+/* Sidebar */
+
+#sidebar {
+	margin: 0;
+	width: 190px;
+	padding: 10px;
+	float:right;
+	font-size:0.9em;
+	text-align:justify;
+}
+#sidebar h1 {
+	margin-top : 0;
+	padding : 5px 0 5px 5px;
+	font : bold 0.9em Verdana, 'Trebuchet MS', Sans-serif;
+	font-size: 15px;
+	color : #333333;
+}
+#sidebar ul {
+	list-style-type: none;
+	padding:1em 0;
+	margin: 0 0 1em 0;
+	list-style-type:square;
+	font-size:12px;
+	}
+
+
+/* Forms and Text Fields */
+
+form {
+	margin : 10px;
+	padding : 0 5px;
+	border : 1px solid #C6D9E9;
+	background-color : #E4F2FD;
+}
+
+label {
+	display : block;
+	font-weight : bold;
+	margin : 5px 0;
+	color: #333333;
+}
+
+input {
+	padding : 2px;
+	border : 1px solid #C6D9E9;
+	font : normal 1em Verdana, sans-serif;
+	color : #000000;
+	background:#fff url(gradtop.gif) repeat-x top;
+	background-color : #ffffff;
+}
+
+textarea {
+	width : 400px;
+	padding : 2px;
+	font-family : Verdana, sans-serif;
+	border : 1px solid #C6D9E9;
+	background-color : #ffffff;
+	height : 100px;
+	display : block;
+	background:#fff url(gradtop.gif) repeat-x top;
+	color : #000;
+}
+
+input.button {
+	margin : 0;
+	font : bolder 12px Arial, Sans-serif;
+	border : 1px solid #ccc;
+	padding : 2px 3px;
+	background : #fff;
+	color : #131212;
+}
+
+/* Footer */
+
+#footer 
+{
+	clear: both;
+	margin:0;
+	padding: 1.0em 10%;	
+	font-size: 0.9em;
+	color: #999;
+	background:#fff;
+	text-align:center;	
+	border-top:#C6D9E9 1px solid;
+}
+.post-footer 
+{
+	font-size:0.9em;
+	margin-bottom: 3em;
+	color: #666;	
+	text-align:right;
+	border-bottom: solid 1px #C6D9E9;
+	padding-left:12px;
+}
+.post-footer .date {
+	padding-left : 20px;
+	margin : 0 10px 0 5px;
+	text-align : right;
+	font-size : 9px;
+	color : #666;
+}
+
