@@ -1,0 +1,42 @@
+
+{% extends "themes/wp-bliss/base.html" %}
+
+{% block title %}
+Tree View
+{% endblock %}
+
+{% block bigtitle %}
+Tree View
+{% endblock %}
+
+{% block content %}
+<h2>
+<a href="/tree/">{{ project}}</a>
+
+{% if path %}
+>
+{% for entry in path %}
+<a href="/tree/{{entry.link}}">{{entry.basename}}</a>
+{% if forloop.revcounter0 %}
+ > 
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+</h2>
+
+<ul>
+{% for entry in dirs %}
+<li><a href=/tree/{{ entry.link }}>{{ entry.path }}/</a></li>
+{% endfor %}
+
+{% for entry in files %}
+<li> {{ entry.path }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+
+
