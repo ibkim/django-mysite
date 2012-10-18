@@ -139,6 +139,36 @@ def tree(request, path=''):
     ctx = Context( { 'path': path_param, 'project': project, 'dirs': trees, 'files': files, } )
     return HttpResponse(tpl.render(ctx))
 
+def blob(request, path=''):
+    project = 'mysite'
+    repo = Repo("/home/ibkim/project/python/"+project, odbt=GitCmdObjectDB)
+
+    git = repo.git
+    text = git.show('HEAD:'+path)
+
+    link_paths = {}
+    path_param = []
+    count = 0
+    if path != '':
+        path = os.path.normpath(path).split(os.sep)
+        link = ''
+        for entry in path:
+            for item in range(0, len(path) - count):
+                if count == 0:
+                    link = path[count]
+                else:
+                    link = link + '/' + path[count]
+                link_paths['basename'] = path[count]
+                link_paths['link'] = link
+                path_param.append(copy.copy(link_paths))
+                count = count + 1
+
+    tpl = loader.get_template('blob.html')
+    ctx = Context( { 'path': path_param, 'project': project, 'text': text, } )
+    return HttpResponse(tpl.render(ctx))
+
+    
+
 def makedocs(request, sha=''):
     from docx import *
     relationships = relationshiplist()

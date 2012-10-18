@@ -12,7 +12,6 @@ Tree View
 {% block content %}
 <h2>
 <a href="/tree/">{{ project}}</a>
-
 {% if path %}
 >
 {% for entry in path %}
@@ -23,7 +22,6 @@ Tree View
 {% if forloop.revcounter0 %}
 </a>
 {% endif %}
-
 {% if forloop.revcounter0 %}
  > 
 {% endif %}
@@ -31,19 +29,12 @@ Tree View
 
 {% endif %}
 
-</h2>
-
-<ul>
-{% for entry in dirs %}
-<li><a href=/tree/{{ entry.link }}>{{ entry.path }}/</a></li>
-{% endfor %}
-
-{% for entry in files %}
-<li> <a href="/blob/{{entry.link}}">{{ entry.path }}</a></li>
-{% endfor %}
-</ul>
+</br>
+{{path}}
+</br>
+</br>
+{{ text|linebreaksbr }}
 
 {% endblock %}
-
 
 

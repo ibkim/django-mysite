@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^commit/(?P<page>\d+)/$', commits),
     url(r'^diff/(?P<sha>.*)$', diff),
     url(r'^tree/(?P<path>.*)$', tree),
+    url(r'^blob/(?P<path>.*)$', blob),
     url(r'^makedocs/(?P<sha>.*)$', makedocs),
 
 )
