@@ -1,5 +1,7 @@
 
 # Create your views here.
+import os
+import sys
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Context, loader
@@ -93,6 +95,48 @@ def diff(request, sha=''):
 
     tpl = loader.get_template('diff.html')
     ctx = Context( {'add': AddDiff, 'del': DelDiff, 'rename': ReDiff, 'modify': ModDiff} )
+    return HttpResponse(tpl.render(ctx))
+
+def tree(request, path=''):
+    project = 'mysite'
+    repo = Repo("/home/ibkim/project/python/"+project, odbt=GitCmdObjectDB)
+
+    #path = path.strip()
+    try:
+        tree = repo.heads.homework.commit.tree[path.rstrip('/')]
+    except KeyError:
+        tree = repo.heads.homework.commit.tree
+
+    trees = map(lambda x: { 'path': os.path.basename(x.path), 'link': x.path}, tree.trees)
+    files = map(lambda x: { 'path': os.path.basename(x.path), 'link': x.path}, tree.blobs)
+
+    #path = {'dirname': os.path.dirname(path), 'name': os.path.basename(path)}
+    link_paths = {}
+    path_param = []
+    count = 0
+    if path != '':
+        path = os.path.normpath(path).split(os.sep)
+        link = ''
+        for entry in path:
+            for item in range(0, len(path) - count):
+                if count == 0:
+                    link = path[count]
+                else:
+                    link = link + '/' + path[count]
+                link_paths['basename'] = path[count]
+                link_paths['link'] = link
+                path_param.append(copy.copy(link_paths))
+                count = count + 1
+                
+
+    print path_param
+
+    # TODO: this has error, why?
+    #blob = repo.heads.homework.commit.tree.blobs[0]
+    #ff = blob.data_stream()
+    
+    tpl = loader.get_template('tree.html')
+    ctx = Context( { 'path': path_param, 'project': project, 'dirs': trees, 'files': files, } )
     return HttpResponse(tpl.render(ctx))
 
 def makedocs(request, sha=''):
