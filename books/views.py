@@ -53,8 +53,8 @@ def commits(request, page=1):
     try:
         repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
     except NoSuchPathError:
-        repo = Repo("/home/ibkim/repo-work/kernel", odbt=GitCmdObjectDB)
-    commits = repo.iter_commits('saudi', max_count = entry_per_page, skip = skip_cnt, author='ilbong kim', grep='')
+        repo = Repo("/home/ibkim/project/linux", odbt=GitCmdObjectDB)
+    commits = repo.iter_commits('master', max_count = entry_per_page, skip = skip_cnt, author='ilbong kim', grep='')
 
     commits = map(lambda x: {'hexsha': x.hexsha, 'author': x.author, 'summary': x.summary, 'committed_date': datetime.datetime.fromtimestamp(x.committed_date), 'message': x.message}, commits)
 
@@ -71,7 +71,7 @@ def diff(request, sha=''):
     try:
         repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
     except NoSuchPathError:
-        repo = Repo("/home/ibkim/repo-work/kernel", odbt=GitCmdObjectDB)
+        repo = Repo("/home/ibkim/project/linux", odbt=GitCmdObjectDB)
 
     try:
         commit = repo.commit(sha)
