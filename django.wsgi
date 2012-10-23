@@ -16,7 +16,14 @@ framework.
 import os
 import sys
 
-sys.path.append('/var/www/')
+path = '/var/www/project'
+if path not in sys.path:
+    sys.path.append(path)
+path = '/var/www/project/mysite'
+if path not in sys.path:
+    sys.path.append(path)
+
+#sys.append('/usr/local/lib/python2.7/site-packages')
 
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
@@ -26,6 +33,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
 # setting points here.
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+#application = django.core.handlers.wsgi.WSGIHandler()
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication

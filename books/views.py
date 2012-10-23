@@ -1,5 +1,6 @@
 
 # Create your views here.
+import os, sys
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Context, loader
@@ -49,13 +50,17 @@ def commits(request, page=1):
     else:
         skip_cnt = 0
 
-    repo = Repo("/home/ibkim/project/python/mysite")
-    commits = repo.iter_commits('master', max_count = entry_per_page, skip = skip_cnt)
+    try:
+        repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
+    except NoSuchPathError:
+        repo = Repo("/home/ibkim/repo-work/kernel", odbt=GitCmdObjectDB)
+    commits = repo.iter_commits('saudi', max_count = entry_per_page, skip = skip_cnt, author='ilbong kim', grep='')
 
     commits = map(lambda x: {'hexsha': x.hexsha, 'author': x.author, 'summary': x.summary, 'committed_date': datetime.datetime.fromtimestamp(x.committed_date), 'message': x.message}, commits)
 
     prev_page_num = page - 1
     next_page_num = page + 1
+
     if prev_page_num <= 0:
         prev_page_num = 1
     tpl = loader.get_template('commit_list.html')
@@ -63,7 +68,10 @@ def commits(request, page=1):
     return HttpResponse(tpl.render(ctx))
 
 def diff(request, sha=''):
-    repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
+    try:
+        repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
+    except NoSuchPathError:
+        repo = Repo("/home/ibkim/repo-work/kernel", odbt=GitCmdObjectDB)
 
     try:
         commit = repo.commit(sha)
@@ -94,3 +102,60 @@ def diff(request, sha=''):
     tpl = loader.get_template('diff.html')
     ctx = Context( {'add': AddDiff, 'del': DelDiff, 'rename': ReDiff, 'modify': ModDiff} )
     return HttpResponse(tpl.render(ctx))
+
+def makedocs(request, sha=''):
+    from docx import *
+    relationships = relationshiplist()
+    document = newdocument()
+    docbody = document.xpath('/w:document/w:body', namespaces=nsprefixes)[0]
+    docbody.append(heading('''Welcome to Python's docx module''',1)  )
+    docbody.append(heading('Make and edit docx in 200 lines of pure Python',2))
+    docbody.append(paragraph('The module was created'))
+    for point in ['''COM automation''','''.net or Java''','''Automating OpenOffice or MS Office''']:
+        docbody.append(paragraph(point,style='ListNumber'))
+    docbody.append(paragraph('''For those of us who prefer something simpler, I made docx.'''))
+    docbody.append(heading('Making documents',2))
+    #docbody.append(paragraph('''The docx module has the following features:'''))
+    
+    repo = Repo("/home/ibkim/project/python/mysite", odbt=GitCmdObjectDB)
+
+    try:
+        commit = repo.commit(sha)
+    except BadObject:
+        tpl = loader.get_template('error.html')
+        ctx = Context( {'error': 'Bad ObjectError',} )
+        return HttpResponse(tpl.render(ctx))
+
+    diff = commit.diff( commit.hexsha + '~1', None, True)
+    AddDiff = []
+    DelDiff = []
+    ReDiff = []
+    ModDiff = []
+    # HTML formatting
+    for entry in diff.iter_change_type('M'):
+        if entry.deleted_file or entry.new_file or entry.renamed:
+            continue
+        htmldiff = parse_from_memory(entry.diff, True, True)
+        ModDiff.append({'diff': htmldiff,})
+        paratext = [(htmldiff, 'h'),]
+        docbody.append(paragraph(paratext))        
+
+    for entry in diff.iter_change_type('A'):
+        AddDiff.append(entry)
+    for entry in diff.iter_change_type('D'):
+        DelDiff.append(entry)
+    for entry in diff.iter_change_type('R'):
+        ReDiff.append(entry)
+
+    tpl = loader.get_template('diff.html')
+    ctx = Context( {'add': AddDiff, 'del': DelDiff, 'rename': ReDiff, 'modify': ModDiff} )
+
+    docbody.append(pagebreak(type='page', orient='portrait'))
+    coreprops = coreproperties(title='Python docx demo',subject='A practical example of making docx from Python',creator='Mike MacCana',keywords=['python','Office Open XML','Word'])
+    appprops = appproperties()
+    contenttypes = contenttypes()
+    websettings = websettings()
+    wordrelationships = wordrelationships(relationships)
+    savedocx(document,coreprops,appprops,contenttypes,websettings,wordrelationships,'diff.docx')
+    
+    return HttpResponse(tpl.render(ctx))    
